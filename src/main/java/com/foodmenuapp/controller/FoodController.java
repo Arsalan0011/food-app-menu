@@ -14,6 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Paths;
+import java.util.Date;
 
 @RestController
 public class FoodController {
@@ -23,13 +24,29 @@ public class FoodController {
     @GetMapping("/getFoodMenu")
     public ResponseEntity<MenuResponse> getFoodMenu(@RequestParam("foodType") String foodType) {
         try {
-            String defaultLocation = "/Users/aamin/Desktop/food-menu-app/food-july.xlsx";
+            String defaultLocation = "C:\\Users\\hp\\Documents\\test\\food-app-menu\\food-july.xlsx";
             File file = new File(defaultLocation);
             MenuResponse response = foodService.uploadExcelFile(file,foodType);
             return new ResponseEntity<>(response, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(new MenuResponse(null,"Some exception occured"),HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }
+
+    @GetMapping("/searchMenuByDate")
+    public ResponseEntity<MenuResponse> searchMenuByDate(
+            @RequestParam("foodType") String foodType   ,
+            @RequestParam("date")Date date)
+    {
+        try{
+            String defaultLocation = "C:\\Users\\hp\\Documents\\test\\food-app-menu\\food-july.xlsx";
+            File file = new File(defaultLocation);
+            MenuResponse response= foodService.searchMenuByDate(file,date,foodType);
+            return new ResponseEntity<>(response, HttpStatus.OK);
+            }
+        catch (Exception e) {
+        return new ResponseEntity<>(new MenuResponse(null,"Some exception occured"),HttpStatus.INTERNAL_SERVER_ERROR);
+    }
     }
 
     @PostMapping("/upload")
