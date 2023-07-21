@@ -12,7 +12,7 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class MenuResponse {
+public class    MenuResponse {
     private List<Food> foodList=new ArrayList<>();
     private String message;
 }
